@@ -4,7 +4,14 @@
 <th:block th:replace = "~{/layout/basic :: setContent(~{this::content})}">
 
     <th:block th:fragment="content">
-        <h1 class="mt-4">GuestBook List Page</h1>
+        <h1 class="mt-4">GuestBook List Page
+            <span>
+                <a th:href="@{/guestbook/register}">
+                    <button type="button" class="btn btn-outline-primary">REGISTER
+                    </button>
+                </a>
+            </span>
+        </h1>
 
         <table class="table table-striped">
             <thead>
