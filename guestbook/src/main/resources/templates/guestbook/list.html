@@ -13,6 +13,27 @@
             </span>
         </h1>
 
+        <form action="/guestbook/list" method="get" id="searchForm">
+            <div class="input-group">
+                <input type="hidden" name="page" value = "1">
+                <div class="input-group-prepend">
+                    <select class="custom-select" name="type">
+                        <option th:selected="${pageRequestDTO.type == null}">-------</option>
+                        <option value="t" th:selected="${pageRequestDTO.type =='t'}" >제목</option>
+                        <option value="c" th:selected="${pageRequestDTO.type =='c'}"  >내용</option>
+                        <option value="w"  th:selected="${pageRequestDTO.type =='w'}" >작성자</option>
+                        <option value="tc"  th:selected="${pageRequestDTO.type =='tc'}" >제목 + 내용</option>
+                        <option value="tcw"  th:selected="${pageRequestDTO.type =='tcw'}" >제목 + 내용 + 작성자</option>
+                    </select>
+                </div>
+                <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+                <div class="input-group-append" id="button-addon4">
+                    <button class="btn btn-outline-secondary btn-search" type="button">Search</button>
+                    <button class="btn btn-outline-secondary btn-clear" type="button">Clear</button>
+                </div>
+            </div>
+        </form>
+
         <table class="table table-striped">
             <thead>
             <tr>
@@ -27,7 +48,9 @@
             <tr th:each="dto : ${result.dtoList}" >
                 <th scope="row">
                     <a th:href="@{/guestbook/read(gno = ${dto.gno},
-                    page= ${result.page})}">
+                    page= ${result.page},
+                    type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword})}">
                         [[${dto.gno}]]
                     </a>
                 </th>
@@ -41,17 +64,23 @@
         <ul class="pagination h-100 justify-content-center align-items-center">
 
             <li class="page-item " th:if="${result.prev}">
-                <a class="page-link" th:href="@{/guestbook/list(page= ${result.start -1})}" tabindex="-1">Previous</a>
+                <a class="page-link" th:href="@{/guestbook/list(page= ${result.start -1},
+                    type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">Previous</a>
             </li>
 
             <li th:class=" 'page-item ' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">
-                <a class="page-link" th:href="@{/guestbook/list(page = ${page})}">
+                <a class="page-link" th:href="@{/guestbook/list(page = ${page} ,
+                   type=${pageRequestDTO.type} ,
+                   keyword = ${pageRequestDTO.keyword}  )}">
                     [[${page}]]
                 </a>
             </li>
 
             <li class="page-item" th:if="${result.next}">
-                <a class="page-link" th:href="@{/guestbook/list(page= ${result.end + 1})}">Next</a>
+                <a class="page-link" th:href="@{/guestbook/list(page= ${result.end + 1} ,
+                    type=${pageRequestDTO.type} ,
+                    keyword = ${pageRequestDTO.keyword} )}">Next</a>
             </li>
 
         </ul>
@@ -85,6 +114,20 @@
             if(msg){
                 $(".modal").modal();
             }
+
+            var searchForm = $("#searchForm");
+
+            $('.btn-search').click(function(e){
+
+                searchForm.submit();
+
+            });
+
+            $('.btn-clear').click(function(e){
+
+                searchForm.empty().submit();
+
+            });
 
         </script>
 
