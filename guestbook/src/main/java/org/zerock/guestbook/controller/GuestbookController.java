@@ -77,4 +77,17 @@ public class GuestbookController {
         return "redirect:/guestbook/read";
 
     }
+
+    @PostMapping("/remove")
+    public String remove(long gno, RedirectAttributes redirectAttributes){
+
+        log.info("gno: " + gno);
+
+        service.remove(gno);
+
+        redirectAttributes.addFlashAttribute("msg", gno);
+
+        return "redirect:/guestbook/list";
+
+    }
 }
