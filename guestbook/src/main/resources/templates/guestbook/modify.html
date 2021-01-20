@@ -61,6 +61,21 @@
                     .submit();
             });
 
+            $(".listBtn").click(function() {
+
+                var pageInfo = $("input[name='page']");
+
+                actionForm.empty();
+
+                actionForm.append(pageInfo);
+                actionForm
+                    .attr("action", "/guestbook/list")
+                    .attr("method","get");
+
+               actionForm.submit();
+
+            })
+
         </script>
 
     </th:block>
