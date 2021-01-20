@@ -76,6 +76,16 @@
 
             })
 
+            $(".removeBtn").click(function(){
+
+                actionForm
+                    .attr("action", "/guestbook/remove")
+                    .attr("method","post");
+
+                actionForm.submit();
+
+            });
+
         </script>
 
     </th:block>
