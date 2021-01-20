@@ -22,7 +22,6 @@ public class GuestbookServiceImpl implements GuestbookService {
 
     private final GuestbookRepository repository;
 
-
     @Override
     public Long register(GuestbookDTO dto) {
 
@@ -68,5 +67,12 @@ public class GuestbookServiceImpl implements GuestbookService {
             repository.save(entity);
 
         }
+    }
+
+    @Override
+    public void remove(Long gno) {
+
+        repository.deleteById(gno);
+
     }
 }
