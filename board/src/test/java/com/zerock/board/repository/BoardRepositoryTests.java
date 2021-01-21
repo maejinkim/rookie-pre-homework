@@ -36,6 +36,7 @@ public class BoardRepositoryTests {
 
     }
 
+    @Transactional
     @Test
     public void testRead1() {
 
