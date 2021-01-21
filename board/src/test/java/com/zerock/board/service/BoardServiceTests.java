@@ -56,4 +56,17 @@ public class BoardServiceTests {
         boardService.removeWithReplies(bno);
 
     }
+
+    @Test
+    public void testModify() {
+
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(2L)
+                .title("제목 변경합니다.3")
+                .content("내용 변경합니다.3")
+                .build();
+
+        boardService.modify(boardDTO);
+
+    }
 }
