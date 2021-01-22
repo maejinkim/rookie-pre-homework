@@ -41,6 +41,68 @@
             <button type="button" class="btn btn-info">List</button>
         </a>
 
+        <br>
+        <div>
+            <div class="mt=4">
+                <h5>
+                    <span class="badge badge-secondary replyCount">Reply Count [[${dto.replyCount}]]</span>
+                </h5>
+            </div>
+            <div class="list-group replyList">
+
+            </div>
+        </div>
+
+        <div class="card-body" data-rno="'+reply.rno'"> <b></b>
+
+
+        </div>
+
+        <script>
+            $(document).ready(function() {
+
+                var bno = [[${dto.bno}]];
+                var listGroup = $(".replyList");
+
+                //날짜 처리
+                function formatTime(str) {
+                    var date = new Date(str);
+
+                    return date.getFullYear() + '/' +
+                    (date.getMonth() + 1) + '/' +
+                    date.getDate() + ' ' +
+                    date.getHours() + ':' +
+                    date.getMinutes();
+                }
+
+                function loadJSONData() {
+                    $.getJSON('/replies/board/'+bno, function(arr) {
+                        console.log(arr);
+
+                        var str = "";
+                        $(".replyCount").html(" Reply Count " + arr.length);
+
+                        $.each(arr, function(idx, reply){
+                            console.log(reply);
+                            str += '    <div class="card-body" data-rno="' + reply.rno + '"> <b>' + reply.rno + '</b>';
+                            str += '    <h5 class="card-title">' + reply.text + '</h5>';
+                            str += '    <h6 class="card-subtitle mb-2 text-muted">' + reply.replyer + '</h6>';
+                            str += '    <p class="card-text">' + formatTime(reply.regDate) + '</p>';
+                            str += '    </div>';
+                        })
+
+                        listGroup.html(str);
+                    });
+                }
+
+                $(".replyCount").click(function() {
+
+                    $.getJSON('/replies/board/'+bno, function(arr) {
+                        loadJSONData();
+                    })
+                })
+            });
+        </script>
 
     </th:block>
 
